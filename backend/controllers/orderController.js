@@ -7,7 +7,7 @@ import userModel from "../models/userModel.js";
 
 const app = express();
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-const frontend_url = "http://localhost:5174"; // Ensure this is correct
+const frontend_url = "http://localhost:5173"; // Ensure this is correct
 
 app.use(express.json()); // Ensure JSON body parsing
 app.use(cors({
