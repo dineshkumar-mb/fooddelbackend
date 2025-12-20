@@ -5,17 +5,8 @@ import Stripe from "stripe";
 import orderModel from "../models/orderModel.js";
 import userModel from "../models/userModel.js";
 
-const app = express();
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-const frontend_url = "http://localhost:5173"; // Ensure this is correct
-
-app.use(express.json()); // Ensure JSON body parsing
-app.use(cors({
-    origin: frontend_url, // Restrict CORS to your frontend
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true
-}));
+const frontend_url = process.env.FRONTEND_URL || "https://food-del-frontend-bqm2.vercel.app/"; 
 
 // 🛒 Placing an order
 const placeOrder = async (req, res) => {
