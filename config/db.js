@@ -5,14 +5,22 @@ import dotenv from "dotenv";
 dotenv.config();
 
 export const connectDB = async () => {
+  let uri = process.env.MONGO_URI;
+
+  if (!uri) {
+    console.error("Error: MONGO_URI is not defined in environment variables.");
+    process.exit(1);
+  }
+
+  // Aggressively strip multiple layers of quotes and whitespace
+  // This handles cases like: '"url"', "'url'", '"url', 'url"', etc.
+  uri = uri.replace(/^["']+|["']+$/g, '').trim();
+
   try {
-    await mongoose.connect(process.env.MONGO_URI, {
-     
-      useUnifiedTopology: true,
-    });
+    await mongoose.connect(uri);
     console.log("DB connected successfully");
   } catch (error) {
     console.error("Database connection error:", error);
-    process.exit(1); // Exit process on failure
+    process.exit(1);
   }
 };
