@@ -22,7 +22,7 @@ const loginUser = async (req, res) => {
             return res.json({success:false,message:"Invalid credentials"})
         }
         const token = createToken (user._id);
-        res.json({success:true,token})
+        res.json({success:true,token,name:user.name})
     }
     catch (error){
         console.log(error);
@@ -71,7 +71,7 @@ const registerUser = async (req, res) => {
         const token = createToken(user._id);
 
         // Returning success response
-        res.json({ success: true, token });
+        res.json({ success: true, token, name: user.name });
     } catch (error) {
         console.error(error);
         res.json({ success: false, message: "An error occurred" });

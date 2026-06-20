@@ -56,13 +56,16 @@ const placeOrder = async (req, res) => {
             quantity: 1
         });
 
+        // ✅ Determine the frontend URL dynamically
+        const current_frontend_url = req.headers.origin || process.env.FRONTEND_URL || "https://food-del-frontend-bqm2.vercel.app";
+
         // ✅ Create Stripe Checkout session
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ["card"],
             line_items,
             mode: "payment",
-            success_url: `${frontend_url}/verify?success=true&orderId=${newOrder._id}`,
-            cancel_url: `${frontend_url}/verify?success=false&orderId=${newOrder._id}`
+            success_url: `${current_frontend_url}/verify?success=true&orderId=${newOrder._id}`,
+            cancel_url: `${current_frontend_url}/verify?success=false&orderId=${newOrder._id}`
         });
 
         res.json({ success: true, session_url: session.url });
