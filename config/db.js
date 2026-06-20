@@ -14,7 +14,7 @@ export const connectDB = async () => {
 
   // Aggressively strip multiple layers of quotes and whitespace
   // This handles cases like: '"url"', "'url'", '"url', 'url"', etc.
-  uri = uri.replace(/^["']+|["']+$/g, '').trim();
+  uri = uri.trim().replace(/^["']+|["']+$/g, '');
 
   try {
     await mongoose.connect(uri);
